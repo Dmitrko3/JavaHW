@@ -3,14 +3,12 @@ import java.util.Random;
 // Represents a single horse running as a separate thread
 public class Horse implements Runnable {
     private String id;
-    private FinishingLine f;
     private int distance;
     private Random random;
 
-    // Sets up the horse's ID, the shared finish line, and the distance to run
-    public Horse(String id, FinishingLine f, int distance) {
+    // Sets up the horse's ID and the distance to run
+    public Horse(String id, int distance) {
         this.id = id;
-        this.f = f;
         this.distance = distance;
         this.random = new Random();
     }
@@ -26,7 +24,7 @@ public class Horse implements Runnable {
                 distance -= step;
             }
             // Tell the finish line this horse arrived
-            f.arrive(this);
+            FinishingLine.getInstance().arrive(this);
         } catch (InterruptedException e) {
             System.err.println("Horse " + id + " was interrupted.");
             Thread.currentThread().interrupt();
